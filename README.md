@@ -126,7 +126,7 @@ pkg_resources
 
 Because you're using paver+distutils to manage your distribution, you can use 
 ``pkg_resources`` to provide access to the resources you've just bundled in 
-your distribution.  Take [pkgdemo/__init__.py](tree/master/pkgdemo/__init__.py) for example:
+your distribution.  Take [pkgdemo/__init__.py](pkgdemo/tree/master/pkgdemo/__init__.py) for example:
 
     from pkg_resources import resource_string
 
