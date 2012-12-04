@@ -43,7 +43,7 @@ included in your distribution by way of a dict mapping directories to lists of
 files using glob syntax.
 - ``distutils`` will attempt to automatically determine whether the target egg 
 can be distributed as a compressed zip file, or as a directory.  By specifying 
-``zip_safe - False``, you force it to use a directory, so that your non-python 
+``zip_safe = False``, you force it to use a directory, so that your non-python 
 data files can be accessed.
 
 Build your package
