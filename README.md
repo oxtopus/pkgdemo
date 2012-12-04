@@ -43,7 +43,7 @@ included in your distribution by way of a dict mapping directories to lists of
 files using glob syntax.  Alternatively, you can leave ``package_data`` out 
 altogether, and instead have ``include_package_data = True`` to automatically 
 identify and bundle all files.  The resulting ``setup()`` would be:
-
+    
     setup(
         name = "pkgdemo",
         packages = ["pkgdemo"],
@@ -52,7 +52,7 @@ identify and bundle all files.  The resulting ``setup()`` would be:
         include_package_data = True,
         zip_safe = False
     )
-
+    
 - ``distutils`` will attempt to automatically determine whether the target egg 
 can be distributed as a compressed zip file, or as a directory.  By specifying 
 ``zip_safe = False``, you force it to use a directory, so that your non-python 
