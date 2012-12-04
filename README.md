@@ -16,7 +16,6 @@ can use the ``paver`` command to initialize your project:
 
 Your ``setup()`` will go in ``pavement.py``.  For example:
 
-    $ cat pavement.py
     from paver.setuputils import setup
 
     setup(
@@ -39,7 +38,7 @@ Your ``setup()`` will go in ``pavement.py``.  For example:
 distribution.  Remember, these must be proper python packages (i.e., there must
 be a ``__init__.py`` file present).  By default, all python modules will be 
 included.
-- ``package_data`` explicitly defines additional non-python source files to be 
+- ``package_data`` explicitly defines additional non-python data files to be 
 included in your distribution by way of a dict mapping directories to lists of 
 files using glob syntax.
 - ``distutils`` will attempt to automatically determine whether the target egg 
@@ -127,7 +126,7 @@ pkg_resources
 
 Because you're using paver+distutils to manage your distribution, you can use 
 ``pkg_resources`` to provide access to the resources you've just bundled in 
-your distribution.  Take ``pkgdemo/__init__.py`` for example:
+your distribution.  Take [pkgdemo/__init__.py](tree/master/pkgdemo/__init__.py) for example:
 
     from pkg_resources import resource_string
 
