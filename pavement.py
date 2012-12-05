@@ -13,5 +13,12 @@ setup(
                 "assets/js/*.js"
             ]
         },
-    zip_safe=False
+    zip_safe=False,
+    entry_points = 
+        {
+            "console_scripts": [
+                "pkgdemo = pkgdemo.actions:main",
+                "pkgdemo-foo = pkgdemo.actions:foo"
+            ]
+        }
 )

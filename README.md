@@ -1,6 +1,36 @@
 Simple paver+distutils project with a few examples.
 ===================================================
 
+Intro
+-----
+
+This project demonstrates basic usage of [Paver](http://paver.github.com/paver/) 
+and [distutils](http://docs.python.org/2/distutils/index.html) to help make your 
+Python project installable and to support a consistent and maintainable 
+develop-build-install (and release!) workflow.
+
+### A quick primer on setup.py
+
+``setup.py`` is the de-facto entry point for installing a package and for 
+distributing your package with [PyPi](http://pypi.python.org/pypi).  For 
+example, given an initial checkout of this repository, you can install the 
+``pkgdemo`` Python package onto your system with the following command:
+
+    $ python setup.py install
+
+But you can also use ``easy_install``:
+
+    $ easy_install .
+
+Or ``pip``:
+
+    $ pip install .
+
+If you are actively developing, but not yet ready to install and you want to 
+take advantage of the features provided by the techniques presented here, 
+``python setup.py develop`` will create a package in-place and allow continued 
+development without having to re-install the package.
+
 Initial setup
 -------------
 
@@ -144,7 +174,59 @@ your distribution.  Take [pkgdemo/__init__.py](pkgdemo/tree/master/pkgdemo/__ini
 
     __doc__ = resource_string(__name__, "assets/README.txt")
 
-The ``pkgdemo`` docstring is set to the contents of ``assets/README.txt``.  You do 
-not need to calculate absolute or relative paths and instead can rely on the 
+The ``pkgdemo`` docstring is set to the contents of ``assets/README.txt``.  You 
+do not need to calculate absolute or relative paths and instead can rely on the 
 helper functions in [pkg_resources](http://peak.telecommunity.com/DevCenter/PkgResources).
 
+Entry Points (console scripts)
+------------------------------
+
+``entry_points`` provides a convenient mechanism for defining console scripts.  
+
+Consider the following snippet:
+
+    setup(
+        ...
+        entry_points = 
+            {
+                "console_scripts": [
+                    "pkgdemo = pkgdemo.actions:main",
+                    "pkgdemo-foo = pkgdemo.actions:foo"
+                ]
+            }
+        ...
+    )
+
+Here you define two commands: ``pkgdemo`` and ``pkgdemo-foo``.  The definitions 
+for which can be found in the actions module of the pkgdemo package ([pkgdemo/actions.py](pkgdemo/tree/master/pkgdemo/actions.py)).
+
+Following an installation, the ``main()`` and ``foo()`` functions defined in 
+[pkgdemo/actions.py](pkgdemo/tree/master/pkgdemo/actions.py) can be executed by 
+invoking the ``pkgdemo`` and ``pkgdemo-foo`` commands respectively:
+
+    $ pkgdemo
+    pkgdemo.actions None {'foo': None}
+
+    $ pkgdemo-foo --bar Bar baz
+    pkgdemo.actions:foo( baz ):  {'bar': 'Bar'}
+
+The scripts are automatically generated and placed in the bin directory 
+relative to the package.
+
+    $ which pkgdemo
+    /Path/to/pkgdemo/bin/pkgdemo
+
+The contents should look something like:
+
+    #!/Path/to/python
+    # EASY-INSTALL-ENTRY-SCRIPT: 'pkgdemo==1.0','console_scripts','pkgdemo'
+    __requires__ = 'pkgdemo==1.0'
+    import sys
+    from pkg_resources import load_entry_point
+
+    sys.exit(
+       load_entry_point('pkgdemo==1.0', 'console_scripts', 'pkgdemo')()
+    )
+
+The generated scripts need not be checked into revision control or maintained 
+seperately as they are generated and made available at time of installation.
